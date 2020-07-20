@@ -46,6 +46,10 @@ let User=require('./api_v1/User')
 let user=new User(dbClient)
 let FileManager=require('./api_v1/FileManger')
 let file_manager=new FileManager(dbClient)
+let PaymentHistory=require('./api_v1/PaymentHistory')
+let payment_history=new PaymentHistory(dbClient)
+let Videos=require('./api_v1/Videos')
+let videos=new Videos(dbClient)
 
 app.get('/',async (req,res)=>{
     res.send("Go away")
@@ -68,6 +72,18 @@ app.prefix('/api/v1',function(v1){
     })
     v1.post("/upload-file", async (req,res)=>{
         res.send(await file_manager.UploadFile(req))
+    })
+    v1.post("/payment_history/read", async (req,res)=>{
+        res.send(await payment_history.ReadData(req))
+    })
+    v1.post("/payment_history/save", async (req,res)=>{
+        res.send(await payment_history.SaveData(req))
+    })
+    v1.post("/videos/read", async (req,res)=>{
+        res.send(await videos.ReadData(req))
+    })
+    v1.post("/videos/save", async (req,res)=>{
+        res.send(await videos.SaveData(req))
     })
 })
 app.get('/resource/:filename', function (req, res) {
