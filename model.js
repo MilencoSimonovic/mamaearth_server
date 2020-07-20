@@ -1,0 +1,48 @@
+export default {
+    campaigns:[{
+        "_id":"",
+        "name":"",
+        "description":"",
+        "price":"",
+        "categories":[],
+        "created_at":"",
+        "start_at":"",
+        "end_at":"",
+        "video_url":"",
+        "image_url":""
+    }],
+    users:[
+        {
+            "_id":"",
+            "auth":{
+                provider:"google/facebook",
+                info:{
+
+                },
+                uid:"",
+                email:""
+            },
+            "info":{
+                name:"",
+                email:""
+            },
+            "categories":['','',''],
+            "bank_info":{
+
+            }
+        }
+    ],
+    payment_history:[
+        {
+            "amount":0,
+            "type":"deposit/withdraw",
+            "created_at":""
+        }
+    ],
+    videos:[{
+        "cp_id":"",
+        "uid":"",
+        "video_url":"",
+        "created_at":""
+    }]
+}

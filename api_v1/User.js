@@ -11,7 +11,7 @@ class User {
     }
     async UserSignUp(req){
         let data=req.body
-        if (await this.isDuplicateUserByEmail(data.email)){
+        if (await this.isDuplicateUserByEmail(data.auth.email)){
             return {
                 state:-1,
                 msg:"Email duplicated, Please use another email"
@@ -19,34 +19,8 @@ class User {
         }
         let apiToken = uuidv4();
         let ip = req.headers['x-forwarded-for'] || req.connection.remoteAddress;
-        let user={
-            _id:ObjectId().toString(),
-            auth:{
-                email:data.email,
-                password:bcrypt.hashSync(data.password),
-                apiToken,
-                uid:uuidv4(),
-                level:0,
-                isEnable:true,
-                authProvider:[
-                    {
-                        name:'google',
-                        id:'',
-                    },
-                    {
-                        name:'facebook',
-                        id:'',
-                    }
-                ],
-            },
-            info:{
-                email:data.email,
-                name:data.name||"",
-                photoUrl:"",
-            },
-            created_at:new Date().toISOString(),
-            updated_at:new Date().toISOString(),
-        }
+        let user=data
+        user._id=ObjectId().toString()
         await this.db.collection('users').insertOne(user)
         await this.db.collection('login_history').insertOne({
             _id:ObjectId().toString(),
