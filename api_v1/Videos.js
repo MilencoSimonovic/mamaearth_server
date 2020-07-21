@@ -4,15 +4,15 @@ class PaymentHistory {
         this.db=dbClient.db(process.env.DB_NAME)
     }
     async ReadData(req) {
-        let query = req.query;
-        let result = await this.db.collection('videos').aggregate(query);
+        let query = req.body.query;
+        let result = await this.db.collection('videos').aggregate(query).toArray();
         return {
             status:0,
             result:result
         }
     }
     async SaveData(req) {
-        let saveData=req.saveData;
+        let saveData=req.body;
         if (!saveData._id){
             saveData._id=ObjectId().toString();
         }

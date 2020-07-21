@@ -9,12 +9,20 @@ class User {
         var result = await this.db.collection('users').find().toArray()
         return result
     }
+    async UpdateUser(req){
+        let data=Object.assign({},req.body.updateData)
+        await this.db.collection('users').updateOne({'auth.uid':req.body.uid},{$set:data});
+        return {
+            state:0,
+            msg:"updated successfully"
+        }
+    }
     async UserSignUp(req){
         let data=req.body
         if (await this.isDuplicateUserByEmail(data.auth.email)){
             return {
-                state:-1,
-                msg:"Email duplicated, Please use another email"
+                state:1,
+                msg:"sign in successfully"
             }
         }
         let apiToken = uuidv4();
@@ -89,9 +97,8 @@ class User {
         }
     }
     async LoginCheck(req){
-        let apiToken=req.body.apiToken
         let uid=req.body.uid
-        let isCheck=await this.db.collection('login_history').find({uid,apiToken}).toArray();
+        let isCheck=await this.db.collection('login_history').find({uid}).toArray();
         if (isCheck.length==0){
             return {
                 state:-1

@@ -5,14 +5,14 @@ class PaymentHistory {
     }
     async ReadData(req) {
         let query = req.query;
-        let result = await this.db.collection('payment_history').aggregate(query);
+        let result = await this.db.collection('payment_history').aggregate(query).toArray();
         return {
             status:0,
             result:result
         }
     }
     async SaveData(req) {
-        let saveData=req.saveData;
+        let saveData=req.body;
         if (!saveData._id){
             saveData._id=ObjectId().toString();
         }

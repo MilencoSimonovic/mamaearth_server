@@ -50,7 +50,8 @@ let PaymentHistory=require('./api_v1/PaymentHistory')
 let payment_history=new PaymentHistory(dbClient)
 let Videos=require('./api_v1/Videos')
 let videos=new Videos(dbClient)
-
+let Campaigns=require('./api_v1/Campaigns')
+let campaigns=new Campaigns(dbClient)
 app.get('/',async (req,res)=>{
     res.send("Go away")
 })
@@ -60,6 +61,9 @@ app.prefix('/api/v1',function(v1){
     })
     v1.post("/signup", async (req,res)=>{
         res.send(await user.UserSignUp(req))
+    })
+    v1.post("/account/update", async (req,res)=>{
+        res.send(await user.UpdateUser(req))
     })
     v1.post("/signin", async (req,res)=>{
         res.send(await user.UserSignIn(req))
@@ -78,6 +82,12 @@ app.prefix('/api/v1',function(v1){
     })
     v1.post("/payment_history/save", async (req,res)=>{
         res.send(await payment_history.SaveData(req))
+    })
+    v1.post("/campaigns/save", async (req,res)=>{
+        res.send(await campaigns.SaveData(req))
+    })
+    v1.post("/campaigns/read", async (req,res)=>{
+        res.send(await campaigns.ReadData(req))
     })
     v1.post("/videos/read", async (req,res)=>{
         res.send(await videos.ReadData(req))
