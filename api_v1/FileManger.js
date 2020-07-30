@@ -1,4 +1,4 @@
-let serverUrl="http://3.15.29.129:3000/resource/"
+let serverUrl="https://famefactory2backend.infikick.com/resource/"
 class FileManger {
     constructor(dbClient) {
         this.db=dbClient.db(process.env.DB_NAME)

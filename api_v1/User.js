@@ -141,5 +141,27 @@ class User {
         ]).toArray();
         return users[0]
     }
+    async ReadUsers(){
+        let result = await this.db.collection('users').aggregate([
+            {
+                $project:{info:1,"auth.uid":1}
+            },
+            {
+                $lookup:{
+                    from:"videos",
+                    foreignField:"uid",
+                    localField:"auth.uid",
+                    as:"videos"
+                }
+            },
+            {
+                $sort:{"videos.created_at":1}
+            }
+        ]).toArray();
+        return {
+            state:0,
+            result
+        }
+    }
 }
 module.exports = User
