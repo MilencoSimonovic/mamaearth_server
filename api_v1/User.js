@@ -144,7 +144,7 @@ class User {
     async ReadUsers(){
         let result = await this.db.collection('users').aggregate([
             {
-                $project:{info:1,"auth.uid":1}
+                $project:{info:1,"auth.uid":1,categories:1}
             },
             {
                 $lookup:{
